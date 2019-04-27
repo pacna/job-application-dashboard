@@ -1,5 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Job Application Dashboard
+
+An easy to use dashboard to visually look at job applications. 
+
 ## Available Scripts
 
 In the project directory, you can run:
