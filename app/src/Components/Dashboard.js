@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -16,8 +16,36 @@ import SortByAlphaIcon from '@material-ui/icons/SortByAlpha';
 import SampleData from '../sample.json' 
 import Button from '@material-ui/core/Button';
 import Colors from '../Colors/colors'
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const Dashboard = props => {
+    const [sample, setSample] = useState(SampleData)
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [check, setCheck] = useState(false);
+    const closeAnchor = () => {
+        setAnchorEl(null)
+    }
+    const openAnchor = evt => {
+        setAnchorEl(evt.currentTarget)
+    }
+    const handleCheck = evt => {
+        setCheck(evt.target.checked);
+        sorting(SampleData, !check);
+    }
+    const sorting = (data, check) => {
+        if(check){
+            const newAry = data.map(a => a).sort((a,b) => {
+                if(a.name < b.name ) return -1;
+                if(a.name > b.name) return 1;
+                return 0;
+            })
+            setSample(newAry);
+        }else{
+            setSample(data);
+        }
+    }
     return(
         <div>
             <AppBar position="static">
@@ -28,10 +56,25 @@ const Dashboard = props => {
                 </Toolbar>
             </AppBar>
             <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"15px", marginTop:"15px"}}>
-                <Button variant="outlined" color="primary" style={{marginRight:"18px"}}>
-                    Sort
-                    <SortByAlphaIcon />
-                </Button>
+                <div>
+                    <Button onClick={openAnchor} variant="outlined" color="primary" style={{marginRight:"18px"}}>
+                        Sort
+                        <SortByAlphaIcon />
+                    </Button>
+                    <Menu
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={closeAnchor}
+                    >
+                        <MenuItem>
+                            Sort
+                            <Checkbox
+                                checked={check}
+                                onChange={handleCheck}
+                            />
+                        </MenuItem>
+                    </Menu>
+                </div>
                 <Button variant="outlined" style={{marginRight:"18px"}}>
                     Filter
                     <FilterIcon />
@@ -39,7 +82,7 @@ const Dashboard = props => {
             </div>
             <Divider />
             {
-                SampleData.map(x => {
+                sample.map(x => {
                     return(
                         <List key={x.id}>
                             <ListItem>
