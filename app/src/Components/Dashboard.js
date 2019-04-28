@@ -2,6 +2,16 @@ import React from 'react'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import InfoIcon from '@material-ui/icons/Info';
+import FavoriteIcon from '@material-ui/icons/Star';
+import NonFavoriteIcon from '@material-ui/icons/StarBorder';
+import SampleData from '../sample.json' 
 
 const Dashboard = props => {
     return(
@@ -13,6 +23,35 @@ const Dashboard = props => {
                     </Typography>
                 </Toolbar>
             </AppBar>
+            {
+                SampleData.map(x => {
+                    return(
+                        <List key={x.id}>
+                            <ListItem>
+                                <Grid container spacing={24} alignItems="center">
+                                    <Grid item xs={4} >
+                                        <ListItemText primary={x.name} secondary={"Applied " + x.applied}/>
+                                    </Grid>
+                                    <Grid item xs={4} >
+                                        <ListItemText primary={"Position: "  + x.position}/>
+                                    </Grid>
+                                    <Grid item xs={2}>
+                                        <IconButton style={{float: "right"}}>
+                                            <InfoIcon />
+                                        </IconButton>
+                                    </Grid>
+                                    <Grid item xs={2} >
+                                        <IconButton style={{float: "right"}}>
+                                            <NonFavoriteIcon />
+                                        </IconButton>
+                                    </Grid>
+                                </Grid>
+                            </ListItem>
+                            <Divider />
+                        </List>
+                    )
+                })
+            }
         </div>
     )
 }
