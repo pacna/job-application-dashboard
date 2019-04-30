@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -9,9 +9,7 @@ import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
-import FavoriteIcon from '@material-ui/icons/Star';
-import NonFavoriteIcon from '@material-ui/icons/StarBorder';
-import SampleData from '../sample.json' 
+import SampleData from '../sample.json'
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -19,6 +17,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import SortButton from './SortButton'
 import FilterButton from './FilterButton'
 import DetailApplicationPopup from './DetailApplicationPopup'
+import Bookmark from './Bookmark';
 
 const Dashboard = props => {
     const [sample, setSample] = useState(SampleData)
@@ -33,52 +32,50 @@ const Dashboard = props => {
         setDialogPopup(false)
     }
     const sorting = (data, check) => {
-        if(check){
-            const newAry = data.map(a => a).sort((a,b) => {
-                if(a.name < b.name ) return -1;
-                if(a.name > b.name) return 1;
+        if (check) {
+            const newAry = data.map(a => a).sort((a, b) => {
+                if (a.name < b.name) return -1;
+                if (a.name > b.name) return 1;
                 return 0;
             })
             setSample(newAry);
-        }else{
+        } else {
             setSample(data);
         }
     }
-    return(
+    return (
         <div>
             <AppBar position="static">
-                <Toolbar  style={{paddingLeft: "18px"}}>
+                <Toolbar style={{ paddingLeft: "18px" }}>
                     <Typography variant="h6" color="inherit">
                         Job Application Dashboard
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"15px", marginTop:"15px"}}>
-                <SortButton SampleData={SampleData} sorting={sorting}/>
+            <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "15px", marginTop: "15px" }}>
+                <SortButton SampleData={SampleData} sorting={sorting} />
                 <FilterButton />
             </div>
             <Divider />
             {
                 sample.map(x => {
-                    return(
+                    return (
                         <List key={x.id}>
                             <ListItem>
                                 <Grid container spacing={24} alignItems="center">
                                     <Grid item xs={4} >
-                                        <ListItemText primary={x.name} secondary={"Applied " + x.applied}/>
+                                        <ListItemText primary={x.name} secondary={"Applied " + x.applied} />
                                     </Grid>
                                     <Grid item xs={4} >
-                                        <ListItemText primary={"Position: "  + x.position}/>
+                                        <ListItemText primary={"Position: " + x.position} />
                                     </Grid>
                                     <Grid item xs={2}>
-                                        <IconButton onClick={() => openDialogPopup(x)} style={{float: "right"}}>
+                                        <IconButton onClick={() => openDialogPopup(x)} style={{ float: "right" }}>
                                             <InfoIcon />
                                         </IconButton>
                                     </Grid>
                                     <Grid item xs={2} >
-                                        <IconButton style={{float: "right"}}>
-                                            <NonFavoriteIcon />
-                                        </IconButton>
+                                        <Bookmark />
                                     </Grid>
                                 </Grid>
                             </ListItem>
@@ -87,7 +84,7 @@ const Dashboard = props => {
                     )
                 })
             }
-            <DetailApplicationPopup applicant={applicant} dialogPopup={dialogPopup} closeDialogPopup={closeDialogPopup}/>
+            <DetailApplicationPopup applicant={applicant} dialogPopup={dialogPopup} closeDialogPopup={closeDialogPopup} />
         </div>
     )
 }
