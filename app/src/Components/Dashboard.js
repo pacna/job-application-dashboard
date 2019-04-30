@@ -63,18 +63,18 @@ const Dashboard = props => {
                         <List key={x.id}>
                             <ListItem>
                                 <Grid container spacing={24} alignItems="center">
-                                    <Grid item xs={4} >
+                                    <Grid item xs={4} md={4}>
                                         <ListItemText primary={x.name} secondary={"Applied " + x.applied} />
                                     </Grid>
-                                    <Grid item xs={4} >
+                                    <Grid item xs={4} md={4}>
                                         <ListItemText primary={"Position: " + x.position} />
                                     </Grid>
-                                    <Grid item xs={2}>
+                                    <Grid item xs={2} md={2}>
                                         <IconButton onClick={() => openDialogPopup(x)} style={{ float: "right" }}>
                                             <InfoIcon />
                                         </IconButton>
                                     </Grid>
-                                    <Grid item xs={2} >
+                                    <Grid item xs={2} md={2}>
                                         <Bookmark />
                                     </Grid>
                                 </Grid>
