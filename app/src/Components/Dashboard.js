@@ -15,24 +15,46 @@ import NonFavoriteIcon from '@material-ui/icons/StarBorder';
 import SortByAlphaIcon from '@material-ui/icons/SortByAlpha';
 import SampleData from '../sample.json' 
 import Button from '@material-ui/core/Button';
-import Colors from '../Colors/colors'
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const Dashboard = props => {
     const [sample, setSample] = useState(SampleData)
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [check, setCheck] = useState(false);
-    const closeAnchor = () => {
-        setAnchorEl(null)
+    const [sortAnchorEl, setSortAnchorEl] = useState(null);
+    const [filterAnchorEl, setFilterAnchorEl] = useState(null);
+    const [sortCheck, setSortCheck] = useState(false);
+    const [filterCheck, setFilterCheck] = useState(false);
+    const [dialogPopup, setDialogPopup] = useState(false);
+    const sortCloseAnchor = () => {
+        setSortAnchorEl(null)
     }
-    const openAnchor = evt => {
-        setAnchorEl(evt.currentTarget)
+    const sortOpenAnchor = evt => {
+        setSortAnchorEl(evt.currentTarget)
     }
-    const handleCheck = evt => {
-        setCheck(evt.target.checked);
-        sorting(SampleData, !check);
+    const filterOpenAnchor = evt => {
+        setFilterAnchorEl(evt.currentTarget)
+    }
+    const filterCloseAnchor = () => {
+        setFilterAnchorEl(null)
+    }
+    const handleSortCheck = evt => {
+        setSortCheck(evt.target.checked);
+        sorting(SampleData, !sortCheck);
+    }
+    const handleFilterCheck = evt => {
+        setFilterCheck(evt.target.checked);
+    }
+    const openDialogPopup = () => {
+        setDialogPopup(true);
+    }
+    const closeDialogPopup = () => {
+        setDialogPopup(false)
     }
     const sorting = (data, check) => {
         if(check){
@@ -57,28 +79,43 @@ const Dashboard = props => {
             </AppBar>
             <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"15px", marginTop:"15px"}}>
                 <div>
-                    <Button onClick={openAnchor} variant="outlined" color="primary" style={{marginRight:"18px"}}>
+                    <Button onClick={sortOpenAnchor} variant="outlined" color="primary" style={{marginRight:"18px"}}>
                         Sort
                         <SortByAlphaIcon />
                     </Button>
                     <Menu
-                    anchorEl={anchorEl}
-                    open={Boolean(anchorEl)}
-                    onClose={closeAnchor}
+                    anchorEl={sortAnchorEl}
+                    open={Boolean(sortAnchorEl)}
+                    onClose={sortCloseAnchor}
                     >
                         <MenuItem>
-                            Sort
+                            Alphabetical Sort
                             <Checkbox
-                                checked={check}
-                                onChange={handleCheck}
+                                checked={sortCheck}
+                                onChange={handleSortCheck}
                             />
                         </MenuItem>
                     </Menu>
                 </div>
-                <Button variant="outlined" style={{marginRight:"18px"}}>
-                    Filter
-                    <FilterIcon />
-                </Button>
+                <div>
+                    <Button onClick={filterOpenAnchor} variant="outlined" style={{marginRight:"18px"}}>
+                        Filter
+                        <FilterIcon />
+                    </Button>
+                    <Menu
+                    anchorEl={filterAnchorEl}
+                    open={Boolean(filterAnchorEl)}
+                    onClose={filterCloseAnchor}
+                    >
+                        <MenuItem>
+                            Favorites
+                            <Checkbox
+                                checked={filterCheck}
+                                onChange={handleFilterCheck}
+                            />
+                        </MenuItem>
+                    </Menu>
+                </div>
             </div>
             <Divider />
             {
@@ -94,7 +131,7 @@ const Dashboard = props => {
                                         <ListItemText primary={"Position: "  + x.position}/>
                                     </Grid>
                                     <Grid item xs={2}>
-                                        <IconButton style={{float: "right"}}>
+                                        <IconButton onClick={openDialogPopup} style={{float: "right"}}>
                                             <InfoIcon />
                                         </IconButton>
                                     </Grid>
@@ -110,6 +147,24 @@ const Dashboard = props => {
                     )
                 })
             }
+            <Dialog 
+            open={dialogPopup}
+            onClose={closeDialogPopup}
+            >
+                <DialogTitle>
+                    Foo
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Hello World
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button variant="outlined" color="primary" onClick={closeDialogPopup}>
+                        Close
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     )
 }
