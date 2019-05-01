@@ -16,8 +16,6 @@ const FilterButton = props => {
         setAnchorEl(null)
     }
     useEffect(() => {
-        const isChecked = JSON.parse((localStorage.getItem("filterCheck"))) ? true : false
-        setFilterCheck(isChecked)
     })
     return(
         <div>

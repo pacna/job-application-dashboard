@@ -1,13 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import FavoriteIcon from '@material-ui/icons/Star';
 import NonFavoriteIcon from '@material-ui/icons/StarBorder';
 import IconButton from '@material-ui/core/IconButton';
 
 const Bookmark = props => {
-    const {userId, sample, fav, saveBookMark} = props;
-    // const [bookmark, setBookMark] = useState(fav)
-    
-    console.log("fav", fav)
+    const {userId, fav, saveBookMark} = props;
     return (
         <IconButton onClick={() => saveBookMark(userId)} style={{ float: "right" }}>
             {
@@ -16,7 +13,4 @@ const Bookmark = props => {
         </IconButton>
     )
 }
-//sample
-//filterAry
-//
 export default Bookmark
