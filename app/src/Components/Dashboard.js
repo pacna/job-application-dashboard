@@ -23,6 +23,7 @@ const Dashboard = props => {
     const [sample, setSample] = useState(SampleData)
     const [dialogPopup, setDialogPopup] = useState(false);
     const [applicant, setApplicant] = useState({});
+    const [filterCheck, setFilterCheck] = useState(false);
 
     const openDialogPopup = user => {
         setDialogPopup(true);
@@ -43,6 +44,41 @@ const Dashboard = props => {
             setSample(data);
         }
     }
+    const handleFilterCheck = (evt) => {
+        setFilterCheck(evt.target.checked);
+    }
+    const applicantList = sample.filter(x => {
+        if(filterCheck){
+            return x.favorite === true
+        }
+        else{
+            return x;
+        }
+    }).map(x => {
+        return (
+            <List key={x.id}>
+                <ListItem>
+                    <Grid container spacing={24} alignItems="center">
+                        <Grid item xs={4} md={4}>
+                            <ListItemText primary={x.name} secondary={"Applied " + x.applied} />
+                        </Grid>
+                        <Grid item xs={4} md={4}>
+                            <ListItemText primary={"Position: " + x.position} />
+                        </Grid>
+                        <Grid item xs={2} md={2}>
+                            <IconButton onClick={() => openDialogPopup(x)} style={{ float: "right" }}>
+                                <InfoIcon />
+                            </IconButton>
+                        </Grid>
+                        <Grid item xs={2} md={2}>
+                            <Bookmark sample={sample} userId={x.id} />
+                        </Grid>
+                    </Grid>
+                </ListItem>
+                <Divider />
+            </List>
+        )
+    })
     return (
         <div>
             <AppBar position="static">
@@ -54,35 +90,11 @@ const Dashboard = props => {
             </AppBar>
             <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "15px", marginTop: "15px" }}>
                 <SortButton SampleData={SampleData} sorting={sorting} />
-                <FilterButton />
+                <FilterButton sample={sample} handleFilterCheck={handleFilterCheck} filterCheck={filterCheck}/>
             </div>
             <Divider />
             {
-                sample.map(x => {
-                    return (
-                        <List key={x.id}>
-                            <ListItem>
-                                <Grid container spacing={24} alignItems="center">
-                                    <Grid item xs={4} md={4}>
-                                        <ListItemText primary={x.name} secondary={"Applied " + x.applied} />
-                                    </Grid>
-                                    <Grid item xs={4} md={4}>
-                                        <ListItemText primary={"Position: " + x.position} />
-                                    </Grid>
-                                    <Grid item xs={2} md={2}>
-                                        <IconButton onClick={() => openDialogPopup(x)} style={{ float: "right" }}>
-                                            <InfoIcon />
-                                        </IconButton>
-                                    </Grid>
-                                    <Grid item xs={2} md={2}>
-                                        <Bookmark />
-                                    </Grid>
-                                </Grid>
-                            </ListItem>
-                            <Divider />
-                        </List>
-                    )
-                })
+              applicantList.length === 0  ? <h2>No favorites</h2> : applicantList   
             }
             <DetailApplicationPopup applicant={applicant} dialogPopup={dialogPopup} closeDialogPopup={closeDialogPopup} />
         </div>

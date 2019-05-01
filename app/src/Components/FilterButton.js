@@ -7,7 +7,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 const FilterButton = props => {
     const [anchorEl, setAnchorEl] = useState(null)
-    const [check, setCheck] = useState(false);
+    // const [check, setCheck] = useState(false);
+    const {sample, handleFilterCheck, filterCheck} = props;
 
     const openAnchor = evt => {
         setAnchorEl(evt.currentTarget);
@@ -15,9 +16,11 @@ const FilterButton = props => {
     const closeAnchor = () => {
         setAnchorEl(null)
     }
-    const handleCheck = evt => {
-        setCheck(evt.target.checked)
-    }
+    // const handleCheck = evt => {
+    //     setCheck(evt.target.checked)
+    //     filtering(sample, !check);
+
+    // }
 
     return(
         <div>
@@ -33,8 +36,8 @@ const FilterButton = props => {
                 <MenuItem>
                     Favorites
                     <Checkbox
-                        checked={check}
-                        onChange={handleCheck}
+                        checked={filterCheck}
+                        onChange={handleFilterCheck}
                     />
                 </MenuItem>
             </Menu>
