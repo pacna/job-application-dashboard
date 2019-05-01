@@ -4,22 +4,14 @@ import NonFavoriteIcon from '@material-ui/icons/StarBorder';
 import IconButton from '@material-ui/core/IconButton';
 
 const Bookmark = props => {
-    const {userId, sample} = props;
-    const [bookmark, setBookMark] = useState(false)
-    const saveBookMark = () => {
-        //[]
-        setBookMark(!bookmark);
-        sample.forEach((x, index) => {
-            if(x.id === userId){
-                sample[index].favorite = !bookmark;
-            }
-        })
-
-    }
+    const {userId, sample, fav, saveBookMark} = props;
+    // const [bookmark, setBookMark] = useState(fav)
+    
+    console.log("fav", fav)
     return (
-        <IconButton onClick={saveBookMark} style={{ float: "right" }}>
+        <IconButton onClick={() => saveBookMark(userId)} style={{ float: "right" }}>
             {
-                bookmark ? <FavoriteIcon /> : <NonFavoriteIcon />
+                fav ? <FavoriteIcon /> : <NonFavoriteIcon />
             }
         </IconButton>
     )

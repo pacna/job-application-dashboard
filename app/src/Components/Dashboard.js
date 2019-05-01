@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -10,10 +10,6 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 import SampleData from '../sample.json'
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Checkbox from '@material-ui/core/Checkbox';
 import SortButton from './SortButton'
 import FilterButton from './FilterButton'
 import DetailApplicationPopup from './DetailApplicationPopup'
@@ -25,6 +21,12 @@ const Dashboard = props => {
     const [applicant, setApplicant] = useState({});
     const [filterCheck, setFilterCheck] = useState(false);
 
+    useEffect(()=> {
+        const data = JSON.parse(localStorage.getItem("sample")) ? JSON.parse(localStorage.getItem("sample")) : SampleData
+        setSample(data)
+    },[])
+
+    console.log(sample)
     const openDialogPopup = user => {
         setDialogPopup(true);
         setApplicant(user)
@@ -46,7 +48,21 @@ const Dashboard = props => {
     }
     const handleFilterCheck = (evt) => {
         setFilterCheck(evt.target.checked);
+        localStorage.setItem("filterCheck", JSON.stringify(!filterCheck))
     }
+    const saveBookMark = userId => {
+        const newSample = sample.map(x => {
+            if(x.id === userId){
+                console.log(userId)
+                x.favorite = x.favorite ? false : true 
+            }
+            return x;
+        })
+        setSample(newSample)
+        localStorage.setItem("sample", JSON.stringify(newSample))
+
+    }
+
     const applicantList = sample.filter(x => {
         if(filterCheck){
             return x.favorite === true
@@ -71,7 +87,7 @@ const Dashboard = props => {
                             </IconButton>
                         </Grid>
                         <Grid item xs={2} md={2}>
-                            <Bookmark sample={sample} userId={x.id} />
+                            <Bookmark fav={x.favorite} sample={sample} userId={x.id} saveBookMark={saveBookMark}/>
                         </Grid>
                     </Grid>
                 </ListItem>
@@ -90,7 +106,7 @@ const Dashboard = props => {
             </AppBar>
             <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "15px", marginTop: "15px" }}>
                 <SortButton SampleData={SampleData} sorting={sorting} />
-                <FilterButton sample={sample} handleFilterCheck={handleFilterCheck} filterCheck={filterCheck}/>
+                <FilterButton sample={sample} handleFilterCheck={handleFilterCheck} filterCheck={filterCheck} setFilterCheck={setFilterCheck}/>
             </div>
             <Divider />
             {

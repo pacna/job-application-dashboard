@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import FilterIcon from '@material-ui/icons/FilterList';
@@ -7,8 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 const FilterButton = props => {
     const [anchorEl, setAnchorEl] = useState(null)
-    // const [check, setCheck] = useState(false);
-    const {sample, handleFilterCheck, filterCheck} = props;
+    const {handleFilterCheck, filterCheck, setFilterCheck} = props;
 
     const openAnchor = evt => {
         setAnchorEl(evt.currentTarget);
@@ -16,12 +15,10 @@ const FilterButton = props => {
     const closeAnchor = () => {
         setAnchorEl(null)
     }
-    // const handleCheck = evt => {
-    //     setCheck(evt.target.checked)
-    //     filtering(sample, !check);
-
-    // }
-
+    useEffect(() => {
+        const isChecked = JSON.parse((localStorage.getItem("filterCheck"))) ? true : false
+        setFilterCheck(isChecked)
+    })
     return(
         <div>
             <Button onClick={openAnchor} variant="outlined" style={{marginRight:"18px"}}>

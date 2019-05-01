@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import SortByAlphaIcon from '@material-ui/icons/SortByAlpha';
@@ -18,9 +18,15 @@ const SortButton = props => {
     }
     const handleCheck = evt => {
         setCheck(evt.target.checked)
+        localStorage.setItem("sortCheck", JSON.stringify(!check))
         sorting(SampleData, !check)
     }
+    useEffect(() => {
+        const isChecked = JSON.parse((localStorage.getItem("sortCheck"))) ? true : false
+        setCheck(isChecked)
+        sorting(SampleData, isChecked);
 
+    },[])
     return(
         <div>
             <Button onClick={openAnchor} variant="outlined" color="primary" style={{marginRight:"18px"}}>

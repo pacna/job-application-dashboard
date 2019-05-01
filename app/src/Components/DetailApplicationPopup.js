@@ -12,7 +12,6 @@ import Availability from './Availability';
 
 const DetailApplicationPopup = prop => {
     const {closeDialogPopup, dialogPopup, applicant, fullScreen} = prop;
-    console.log("USER", applicant, fullScreen);
     const displayExperience = experience => {
         if(experience === 0){
             return "None"
