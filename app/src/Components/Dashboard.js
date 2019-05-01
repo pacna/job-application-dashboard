@@ -25,8 +25,6 @@ const Dashboard = props => {
   const [filterCheck, setFilterCheck] = useState(false);
   const [sorted, setSorted] = useState(false);
 
-  console.log('sorted: ', sorted)
-
   const openDialogPopup = user => {
     setDialogPopup(true);
     setApplicant(user);
@@ -34,25 +32,6 @@ const Dashboard = props => {
   const closeDialogPopup = () => {
     setDialogPopup(false);
   };
-  // const sorting = (data, check) => {
-  //     console.log('ddata: ", ', data)
-  //     data.forEach(x => console.log("data FAVS: " , x.favorites))
-  //     if (check) {
-  //         const newAry = data.sort((a, b) => {
-  //             if (a.name < b.name) return -1;
-  //             if (a.name > b.name) return 1;
-  //             return 0;
-  //         })
-  //         setSample(newAry);
-  //         console.log(newAry, data)
-  //     } else {
-  //         setSample(SampleData.map((x, i) => {
-  //             x.favorite = data[i].favorite ? true : false
-  //             return x
-  //         }));
-  //     }
-  // }
-
   const withSort = apps => {
     if (sorted) {
       return apps.map(x => x).sort((a, b) => {
@@ -60,9 +39,7 @@ const Dashboard = props => {
         if (a.name > b.name) return 1;
         return 0;
       });
-
     }
-
     return apps;
   };
 
@@ -71,13 +48,10 @@ const Dashboard = props => {
     localStorage.setItem("filterCheck", JSON.stringify(!filterCheck));
   };
 
-  // sample.forEach(x => console.log(x.favorite))
   const saveBookMark = userId => {
     const newSample = sample.map(x => {
-      console.log("favorites: ", x.favorite);
       if (x.id === userId) {
         x.favorite = x.favorite ? false : true;
-        console.log("FAVVVVVV: ", x.favorite);
       }
       return x;
     });
@@ -88,16 +62,10 @@ const Dashboard = props => {
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("sample"));
-    const isChecked = JSON.parse(localStorage.getItem("sortCheck"))
-      ? true
-      : false;
-    const isFiltered = JSON.parse(localStorage.getItem("filterCheck"))
-      ? true
-      : false;
-
+    const isChecked = JSON.parse(localStorage.getItem("sortCheck")) ? true : false;
+    const isFiltered = JSON.parse(localStorage.getItem("filterCheck")) ? true : false;
     setFilterCheck(isFiltered);
     setSorted(isChecked);
-    // data && sorting(sample, isChecked);
     data && setSample(data);
   }, []);
 
@@ -166,12 +134,10 @@ const Dashboard = props => {
           marginTop: "15px"
         }}
       >
-        <SortButton SampleData={sample} setSort={setSorted} />
+        <SortButton setSort={setSorted} />
         <FilterButton
-          sample={sample}
-          handleFilterCheck={handleFilterCheck}
-          filterCheck={filterCheck}
-          setFilterCheck={setFilterCheck}
+            handleFilterCheck={handleFilterCheck}
+            filterCheck={filterCheck}
         />
       </div>
       <Divider />

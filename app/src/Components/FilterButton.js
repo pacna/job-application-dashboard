@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import FilterIcon from '@material-ui/icons/FilterList';
@@ -7,7 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 const FilterButton = props => {
     const [anchorEl, setAnchorEl] = useState(null)
-    const {handleFilterCheck, filterCheck, setFilterCheck} = props;
+    const {handleFilterCheck, filterCheck} = props;
 
     const openAnchor = evt => {
         setAnchorEl(evt.currentTarget);
@@ -15,8 +15,6 @@ const FilterButton = props => {
     const closeAnchor = () => {
         setAnchorEl(null)
     }
-    useEffect(() => {
-    })
     return(
         <div>
             <Button onClick={openAnchor} variant="outlined" style={{marginRight:"18px"}}>

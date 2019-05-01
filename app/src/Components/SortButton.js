@@ -6,7 +6,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
 const SortButton = props => {
-    const {sorting, SampleData, setSort} = props;
+    const {setSort} = props;
     const [anchorEl, setAnchorEl] = useState(null)
     const [check, setCheck] = useState(false);
 
@@ -18,17 +18,12 @@ const SortButton = props => {
     }
     const handleCheck = evt => {
         setCheck(evt.target.checked)
-        // sorting(SampleData, !check)
         setSort(evt.target.checked)
         localStorage.setItem("sortCheck", JSON.stringify(!check))
     }
     useEffect(() => {
-        const isChecked = JSON.parse(localStorage.getItem("sortCheck"))
-      ? true
-      : false;
-
-      setCheck(isChecked)
-
+        const isChecked = JSON.parse(localStorage.getItem("sortCheck")) ? true : false;
+        setCheck(isChecked)
     },[])
     return(
         <div>
