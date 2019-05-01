@@ -19,8 +19,8 @@ const styles = theme => ({
 });
 
 const Availability = props => {
-    const {applicant, classes} = props;
-    return(
+    const { applicant, classes } = props;
+    return (
         <Paper className={classes.root}>
             <Table className={classes.table}>
                 <TableHead>
@@ -42,11 +42,11 @@ const Availability = props => {
                         <TableCell>{applicant.availability && applicant.availability.Th}</TableCell>
                         <TableCell>{applicant.availability && applicant.availability.F}</TableCell>
                         <TableCell>{applicant.availability && applicant.availability.S}</TableCell>
-                        <TableCell>{applicant.availability && applicant.availability.Su}</TableCell>                            
+                        <TableCell>{applicant.availability && applicant.availability.Su}</TableCell>
                     </TableRow>
                 </TableBody>
             </Table>
         </Paper>
     )
 }
-export default withStyles(styles) (Availability)
+export default withStyles(styles)(Availability)

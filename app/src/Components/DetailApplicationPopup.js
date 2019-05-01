@@ -11,69 +11,69 @@ import TextField from '@material-ui/core/TextField';
 import Availability from './Availability';
 
 const DetailApplicationPopup = prop => {
-    const {closeDialogPopup, dialogPopup, applicant, fullScreen} = prop;
+    const { closeDialogPopup, dialogPopup, applicant, fullScreen } = prop;
     const displayExperience = experience => {
-        if(experience === 0){
+        if (experience === 0) {
             return "None"
         }
-        else if(experience === 1){
+        else if (experience === 1) {
             return experience + " year"
         }
-        else{
+        else {
             return experience + " years"
         }
     }
-    return(
-        <Dialog 
+    return (
+        <Dialog
             open={dialogPopup}
             onClose={closeDialogPopup}
             fullScreen={fullScreen}
-            maxWidth = {'md'}
-            >
+            maxWidth={'md'}
+        >
             <DialogTitle>
                 {applicant.name}
             </DialogTitle>
             <DialogContent>
-                <DialogContentText style={{marginBottom: "1em"}}>
-                    <TextField 
-                        fullWidth 
-                        InputProps={{
-                            readOnly: true,
-                        }} 
-                        label="Position" 
-                        value={applicant.position}
-                    />
-                </DialogContentText >
-                <DialogContentText style={{marginBottom: "1em"}}>
-                    <TextField 
-                        fullWidth 
+                <DialogContentText style={{ marginBottom: "1em" }}>
+                    <TextField
+                        fullWidth
                         InputProps={{
                             readOnly: true,
                         }}
-                        label="Applied" 
-                        value={applicant.applied}/>
+                        label="Position"
+                        value={applicant.position}
+                    />
+                </DialogContentText >
+                <DialogContentText style={{ marginBottom: "1em" }}>
+                    <TextField
+                        fullWidth
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                        label="Applied"
+                        value={applicant.applied} />
                 </DialogContentText>
-                <DialogContentText style={{marginBottom: "1em"}}>
-                    <TextField 
-                        fullWidth 
+                <DialogContentText style={{ marginBottom: "1em" }}>
+                    <TextField
+                        fullWidth
                         label="Experience"
                         InputProps={{
                             readOnly: true,
-                        }} 
+                        }}
                         value={displayExperience(applicant.experience)}
                     />
                 </DialogContentText>
-                <TextField 
+                <TextField
                     fullWidth
                     InputProps={{
                         readOnly: true,
                     }}
-                    label={applicant.questions && applicant.questions[0].text} 
+                    label={applicant.questions && applicant.questions[0].text}
                     value={applicant.questions && applicant.questions[0].answer}
                 />
-                <Availability applicant={applicant}/>
+                <Availability applicant={applicant} />
             </DialogContent>
-            <DialogActions style={{display:"flex", justifyContent:"center"}}>
+            <DialogActions style={{ display: "flex", justifyContent: "center" }}>
                 <Button variant="outlined" color="primary" onClick={closeDialogPopup}>
                     Close
                 </Button>
@@ -84,4 +84,4 @@ const DetailApplicationPopup = prop => {
 DetailApplicationPopup.propTypes = {
     fullScreen: PropTypes.bool.isRequired,
 };
-export default withMobileDialog() (DetailApplicationPopup)
+export default withMobileDialog()(DetailApplicationPopup)

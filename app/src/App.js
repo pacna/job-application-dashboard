@@ -4,7 +4,7 @@ import Dashboard from './Components/Dashboard'
 
 
 const App = props => {
-	return(
+	return (
 		<Dashboard />
 	)
 }
